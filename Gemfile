@@ -1,14 +1,15 @@
 source 'https://rubygems.org'
 gem 'rails', '3.2.14'
-gem 'pg', '0.12.2'
+gem 'mysql2'
 gem 'bootstrap-sass', '~>2.3.2.1'
 gem 'bcrypt-ruby', '3.0.1'
 gem 'faker', '1.1.2'
 gem 'will_paginate', '3.0.4'
 gem 'bootstrap-will_paginate', '0.0.9'
+# for aws settings
+gem 'passenger'
 
 group :development, :test do
-#  gem 'sqlite3', '1.3.5'
   gem 'rspec-rails', '2.11.0'
   gem 'guard-rspec', '1.2.1'
   gem 'guard-spork', '1.2.0'
@@ -17,7 +18,7 @@ group :development, :test do
 end
 
 # assetsでは使うが、
-# 本番環境ではデフォルトで不要なGem
+# no use in production
 group :assets do
   gem 'sass-rails',   '3.2.5'
   gem 'coffee-rails', '3.2.2'
@@ -36,6 +37,5 @@ group :test do
 end
 
 group :production do
-#  gem 'pg', '0.12.2'
   gem 'rails_12factor'
 end
