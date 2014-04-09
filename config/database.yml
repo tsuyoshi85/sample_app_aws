@@ -51,7 +51,7 @@ production:
   port: 3306
   pool: 5
   timeout: 5000
-  host: lmysqlinstance.cq7x6rxj6cuu.us-west-2.rds.amazonaws.com
+  host: mysqlinstance.cq7x6rxj6cuu.us-west-2.rds.amazonaws.com
 
 cucumber:
   <<: *test
