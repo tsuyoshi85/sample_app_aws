@@ -7095,3 +7095,11 @@ aside textarea {
   height: 100px;
   margin-bottom: 5px;
 }
+
+/* micropost countdown */
+/* line 222, ../../app/assets/stylesheets/custom.css.scss */
+.countdown {
+  display: inline;
+  padding-left: 10px;
+  color: #999999;
+}

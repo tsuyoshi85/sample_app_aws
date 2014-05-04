@@ -12094,6 +12094,22 @@ if ( typeof define === "function" && define.amd && define.amd.jQuery ) {
 
 
 (function() {
+  var updateCountdown;
+
+  updateCountdown = function() {
+    var remaining;
+    remaining = 140 - jQuery("#micropost_content").val().length;
+    return jQuery(".countdown").text(remaining + " characters remaining");
+  };
+
+  jQuery(function() {
+    updateCountdown();
+    $("#micropost_content").change(updateCountdown);
+    return $("#micropost_content").keyup(updateCountdown);
+  });
+
+}).call(this);
+(function() {
 
 
 }).call(this);

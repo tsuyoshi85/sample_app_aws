@@ -43,24 +43,6 @@ describe "User pages" do
     end
   end
 
-#  describe "index" do
-#    before do
-#      sign_in FactoryGirl.create(:user)
-#      FactoryGirl.create(:user, name:"Bob", email: "bob@example.com")
-#      FactoryGirl.create(:user, name:"Ben", email: "ben@example.com")
-#      visit users_path
-#    end
-#
-#    it { should have_selector('title',  text: 'All users') }
-#    it { should have_selector('h1',     text: 'All users') }
-#
-#    it "should list each user" do
-#      User.all.each do |user|
-#        page.should have_selector('li', text: user.name)
-#      end
-#    end
-#  end
-
   describe "index" do
     let(:user) { FactoryGirl.create(:user) }
     before(:each) do
@@ -113,21 +95,64 @@ describe "User pages" do
 
   describe "profile page" do
     let(:user){ FactoryGirl.create(:user)}
-    let!(:m1) { FactoryGirl.create(:micropost, user: user, content: "Foo") }
-    let!(:m2) { FactoryGirl.create(:micropost, user: user, content: "Bar") }
-    before do
-      sign_in user
-      visit user_path(user)
-    end
-
-    it { should have_selector('h1', text: user.name) }
-    it { should have_selector('title', text: user.name) }
+    let(:other_user){ FactoryGirl.create(:user)}
 
     describe "microposts" do
+      let!(:m1) { FactoryGirl.create(:micropost, user: user, content: "Foo") }
+      let!(:m2) { FactoryGirl.create(:micropost, user: user, content: "Bar") }
+      before do
+        sign_in user
+        visit user_path(user)
+      end
+  
+      it { should have_selector('h1', text: user.name) }
+      it { should have_selector('title', text: user.name) }
+  
       it { should have_content(m1.content) }
       it { should have_content(m2.content) }
       it { should have_content(user.microposts.count) }
+      it { should have_selector('h3', text: "Microposts") }
+
     end
+
+    describe "micropost" do
+      let!(:m1) { FactoryGirl.create(:micropost, user: user, content: "Foo") }
+      before do
+        sign_in user
+        visit user_path(user)
+      end
+  
+      it { should have_selector('h1', text: user.name) }
+      it { should have_selector('title', text: user.name) }
+  
+      it { should have_content(m1.content) }
+      it { should have_content(user.microposts.count) }
+      it { should have_selector('h3', text: "Micropost") }
+      it { should_not have_selector('h3', text: "Microposts") }
+
+    end
+
+    describe "pagination" do
+      before(:all) { 100.times { FactoryGirl.create(:micropost, user: user, content: "Foo") }}
+      after(:all) { user.microposts.delete_all }
+      before do
+        sign_in user
+        visit user_path(user)
+      end
+
+      it { should have_selector('div.pagination') }
+
+    end
+
+   describe "delete" do
+      let!(:m1) { FactoryGirl.create(:micropost, user: other_user, content: "Bar") }
+      before do
+        sign_in user
+        visit user_path(user)
+      end
+
+      it { should_not have_link('delete') }
+   end 
   end
 
   describe "edit" do
