@@ -8,6 +8,8 @@ gem 'will_paginate', '3.0.4'
 gem 'bootstrap-will_paginate', '0.0.9'
 # for aws settings
 gem 'passenger'
+gem 'execjs'
+gem 'therubyracer'
 
 group :development, :test do
   gem 'rspec-rails', '2.11.0'
